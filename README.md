@@ -1,38 +1,38 @@
 # 🛠️ GoToolsVSCode
 
-> **Bộ công cụ Go thuần Windows cho VS Code — viết bằng Delphi**
+> **A native Windows toolset for Go development in VS Code — built with Delphi**
 >
-> Cài đặt một lần. Tự động áp dụng cho mọi workspace Go.
+> Set up once. Works across every Go workspace automatically.
 
 ---
 
-## ✨ Giới Thiệu
+## ✨ Overview
 
-**GoToolsVSCode** là bộ 8 file `.exe` độc lập tích hợp sâu vào `tasks.json` User-level của VS Code.  
-Khác với shell script hay Makefile, đây là file thực thi Win32 thuần — không qua PowerShell, không lỗi encoding, không phụ thuộc thêm gì.
+**GoToolsVSCode** is a set of 8 standalone `.exe` tools that integrate deeply with VS Code's User-level `tasks.json`.  
+Unlike shell scripts or Makefiles, these are native Win32 executables — no PowerShell wrapper, no encoding issues, no dependencies.
 
-Chạy `GoConfig.exe` một lần → `Ctrl+Shift+B` hiện danh sách task picker trong mọi project Go bạn mở.
-
----
-
-## 📦 Danh Sách Tools
-
-| Tool | Phiên bản | Chức năng |
-|------|-----------|-----------|
-| ⚙️ `GoConfig.exe` | v1.3 | Cài đặt một lần — quét tools, merge vào VS Code User tasks |
-| 📦 `GoBuildDLL.exe` | v1.1 | Build Go DLL cho amd64 + x86 với Garble obfuscation |
-| 🚀 `GoBuildExe.exe` | v1.1 | Build Go EXE cho amd64 + x86 với Garble obfuscation |
-| 🔍 `GoCheckALL.exe` | v1.2 | Kiểm tra song song: go vet + staticcheck + build |
-| 👀 `GoWatcher.exe` | v1.2 | Theo dõi file — tự check + tự build khi lưu `*.go` |
-| 🧹 `GoClean.exe` | v1.3 | Xóa build artifacts + `go clean -cache` |
-| 📋 `GoModSync.exe` | v1.2 | Chạy `go mod tidy` song song cho tất cả project |
-| 🆕 `GoNewProject.exe` | v1.3 | Tạo project Go mới từ template, tự mở VS Code |
+Run `GoConfig.exe` once → `Ctrl+Shift+B` shows a full task picker in every Go project you open.
 
 ---
 
-## 🚀 Hướng Dẫn Sử Dụng
+## 📦 Tools
 
-### Bước 1 — Đặt tools vào một thư mục
+| Tool | Version | Description |
+|------|---------|-------------|
+| ⚙️ `GoConfig.exe` | v1.3 | One-time setup — scans tools, merges into VS Code User tasks |
+| 📦 `GoBuildDLL.exe` | v1.1 | Build Go DLL for amd64 + x86 with Garble obfuscation |
+| 🚀 `GoBuildExe.exe` | v1.1 | Build Go EXE for amd64 + x86 with Garble obfuscation |
+| 🔍 `GoCheckALL.exe` | v1.2 | Parallel multi-project checker: go vet + staticcheck + build |
+| 👀 `GoWatcher.exe` | v1.2 | File watcher — auto-check + auto-build on `*.go` save |
+| 🧹 `GoClean.exe` | v1.3 | Remove build artifacts + `go clean -cache` |
+| 📋 `GoModSync.exe` | v1.2 | Run `go mod tidy` in parallel across all projects |
+| 🆕 `GoNewProject.exe` | v1.3 | Create a new Go project from template, open in VS Code |
+
+---
+
+## 🚀 Quick Start
+
+### Step 1 — Place tools in one folder
 
 ```
 C:\GoToolsVSCode\
@@ -46,81 +46,81 @@ C:\GoToolsVSCode\
     GoNewProject.exe
 ```
 
-### Bước 2 — Chạy GoConfig.exe (chỉ một lần)
+### Step 2 — Run GoConfig.exe (once only)
 
 ```
 C:\GoToolsVSCode\GoConfig.exe
 ```
 
-GoConfig tự động:
-- ✅ Phát hiện tất cả `Go*.exe` trong thư mục
-- ✅ Merge tasks vào `%APPDATA%\Code\User\tasks.json`
-- ✅ Tạo file `.gobuild\*.cfg` mẫu cho từng build tool
-- ✅ Tạo file hướng dẫn `HUONG_DAN.md`
+This automatically:
+- ✅ Detects all `Go*.exe` tools in the folder
+- ✅ Merges tasks into `%APPDATA%\Code\User\tasks.json`
+- ✅ Creates `.gobuild\*.cfg` sample config files
+- ✅ Generates `HUONG_DAN.md` usage guide
 
-> Hỗ trợ **VS Code stable**, **VS Code Insiders** và **Cursor**
+> Supports **VS Code stable**, **VS Code Insiders**, and **Cursor**
 
-### Bước 3 — Cấu hình project Go của bạn
+### Step 3 — Configure your Go project
 
-Copy file `.cfg` mẫu vào project:
-
-```
-<project-của-bạn>\.gobuild\GoBuildDLL.cfg
-```
-
-Chỉnh `ProjectPath` trong file `.cfg` trỏ đến thư mục Go project.
-
-### Bước 4 — Dùng trong VS Code
-
-M�� bất kỳ project Go nào trong VS Code:
+Copy the sample `.cfg` into your project:
 
 ```
-Ctrl + Shift + B  →  danh sách task picker hiện ra  →  chọn tool
+<your-project>\.gobuild\GoBuildDLL.cfg
+```
+
+Edit `ProjectPath` in the `.cfg` file to point to your Go project.
+
+### Step 4 — Use in VS Code
+
+Open any Go project in VS Code:
+
+```
+Ctrl + Shift + B  →  task picker appears  →  select tool
 ```
 
 ---
 
-## ⚙️ Cách Hoạt Động
+## ⚙️ How It Works
 
 ```
 GoConfig.exe
     │
-    ├── Quét Go*.exe trong thư mục
-    ├── Merge vào %APPDATA%\Code\User\tasks.json
-    │       (áp dụng cho MỌI workspace tự động)
-    └── Tạo .gobuild\*.cfg mẫu
+    ├── Scans Go*.exe in its folder
+    ├── Merges into %APPDATA%\Code\User\tasks.json
+    │       (applies to ALL workspaces automatically)
+    └── Creates .gobuild\*.cfg sample configs
 
-VS Code (bất kỳ workspace nào)
+VS Code (any workspace)
     │
     └── Ctrl+Shift+B
             │
-            ├── GoBuildDLL   →  đọc .gobuild\GoBuildDLL.cfg
-            ├── GoBuildExe   →  đọc .gobuild\GoBuildExe.cfg
-            ├── GoCheckALL   →  quét workspace tìm go.mod
-            ├── GoWatcher    →  theo dõi *.go, debounce 800ms
-            ├── GoClean      →  xóa artifacts
-            ├── GoModSync    →  go mod tidy tất cả project
-            └── GoNewProject →  tạo project mới
+            ├── GoBuildDLL   →  reads .gobuild\GoBuildDLL.cfg
+            ├── GoBuildExe   →  reads .gobuild\GoBuildExe.cfg
+            ├── GoCheckALL   →  scans workspace for go.mod files
+            ├── GoWatcher    →  watches *.go, debounce 800ms
+            ├── GoClean      →  removes artifacts
+            ├── GoModSync    →  go mod tidy all projects
+            └── GoNewProject →  scaffold new project
 ```
 
 ---
 
-## 📁 File Cấu Hình (.cfg)
+## 📁 Project Config (.cfg)
 
-M��i build tool đọc file `.cfg` từ thư mục `.gobuild\` trong project.  
-`GoNewProject.exe` tạo file này tự động với `ProjectPath` đã điền sẵn.
+Each build tool reads a `.cfg` file from the `.gobuild\` subfolder of your project.  
+`GoNewProject.exe` creates this file automatically with `ProjectPath` pre-filled.
 
 ```ini
 # GoBuildDLL.cfg
-ProjectPath = D:\GoProjects\MyLib
-OutputDir   = D:\GoProjects\MyLib\release
+ProjectPath = D:\MyGoProjects\MyLib
+OutputDir   = D:\MyGoProjects\MyLib\release
 DLLName     = MyLib
 ```
 
 ```ini
 # GoBuildExe.cfg
-ProjectPath = D:\GoProjects\MyApp
-OutputDir   = D:\GoProjects\MyApp\bin
+ProjectPath = D:\MyGoProjects\MyApp
+OutputDir   = D:\MyGoProjects\MyApp\bin
 ExeName     = MyApp
 UseGarble   = true
 LDFlags     = -s -w
@@ -128,16 +128,16 @@ LDFlags     = -s -w
 
 ---
 
-## 🔍 GoCheckALL — Kiểm Tra Song Song
+## 🔍 GoCheckALL — Parallel Checker
 
-Quét tất cả `go.mod` trong `${workspaceFolder}` và chạy song song nhiều thread:
+Scans all `go.mod` under `${workspaceFolder}` and runs checks in parallel threads:
 
 ```
 [16:17:46] [INFO] === GO TOOLKIT CHECKER ===
-[16:17:46] [OK]   go.mod tìm thấy
-[16:17:46] [OK]   Không có hàm trùng tên
+[16:17:46] [OK]   go.mod found
+[16:17:46] [OK]   No duplicate functions
 [16:17:46] [OK]   go vet passed
-[16:17:47] [OK]   staticcheck passed
+[16:17:46] [OK]   staticcheck passed
 [16:17:48] [OK]   build amd64 OK
 [16:17:49] [OK]   build 386 OK
 
@@ -147,99 +147,99 @@ KET QUA: TAT CA OK
 =====================================
 ```
 
-Các bước kiểm tra:
-- ✅ Kiểm tra `go.mod`
-- ✅ Khai báo package nhất quán
-- ✅ Hàm trùng tên
-- ✅ `//export` trùng tên
+Checks performed:
+- ✅ `go.mod` validation
+- ✅ Package declaration consistency
+- ✅ Duplicate function names
+- ✅ Duplicate `//export` names
 - ✅ `go vet ./...`
 - ✅ `staticcheck ./...`
-- ✅ Build cho `amd64` và `386`
-- ✅ FAIL → tự mở VS Code tại đúng dòng lỗi (`code --goto file.go:line`)
-- ✅ Ghi log vào `%TEMP%\GoCheckALL_<project>.log`
+- ✅ Build for `amd64` and `386`
+- ✅ On FAIL → opens VS Code at exact error line (`code --goto file.go:line`)
+- ✅ Log saved to `%TEMP%\GoCheckALL_<project>.log`
 
 ---
 
-## 👀 GoWatcher — Theo Dõi File + Tự Động Build
+## 👀 GoWatcher — Live File Watcher + Auto Build
 
-Dùng Win32 `ReadDirectoryChangesW` (không polling) — CPU gần bằng 0 khi nhàn rỗi.
+Uses Win32 `ReadDirectoryChangesW` (not polling) — zero CPU when idle.
 
 ```
-[14:51:50] [INFO] Watching : D:\GoProjects\MyLib
+[14:51:50] [INFO] Watching : D:\MyGoProjects\MyLib
 [14:51:50] [INFO] Log FAIL : C:\Users\...\GoWatcher_MyLib.log
 
-[14:52:39] ┌─ [MyLib] File thay doi — bat dau kiem tra...
-[14:52:42] └─ [MyLib] CHECK OK  (3.1s) → dang build...
+[14:52:39] ┌─ [MyLib] File changed — checking...
+[14:52:42] └─ [MyLib] CHECK OK  (3.1s) → building...
 
 [14:52:42] │  [INFO] Auto-build: GoBuildDLL.exe ...
-[14:53:02] │  [OK]   Build hoan thanh: GoBuildDLL.exe
-[14:53:02] └─ [MyLib] BUILD xong  (20.1s)
+[14:53:02] │  [OK]   Build complete: GoBuildDLL.exe
+[14:53:02] └─ [MyLib] BUILD done  (20.1s)
 ```
 
-- Debounce: 800ms (có thể chỉnh qua tham số)
-- FAIL → tự mở VS Code tại đúng dòng lỗi
-- OK → tự động build DLL/EXE qua `GoBuildDLL.exe` hoặc `GoBuildExe.exe`
-- Ghi log vào `%TEMP%\GoWatcher_<project>.log`
-- Nhấn `Ctrl+C` để dừng sạch
+- Debounce: 800ms (configurable via arg)
+- On FAIL → opens VS Code at exact error line automatically
+- On OK → auto-build via `GoBuildDLL.exe` or `GoBuildExe.exe` (reads `.gobuild\*.cfg`)
+- Log saved to `%TEMP%\GoWatcher_<project>.log`
+- Press `Ctrl+C` to stop cleanly
 
 ---
 
-## 🆕 GoNewProject — Tạo Project Từ Template
+## 🆕 GoNewProject — Project Scaffolding
 
-Tạo cấu trúc Go project hoàn chỉnh từ template, sau đó tự mở Explorer và VS Code.
+Creates a complete Go project structure from template, then opens Explorer and VS Code automatically.
 
-**3 loại project:**
+**3 project types:**
 
-| Loại | Mô tả |
-|------|-------|
+| Type | Description |
+|------|-------------|
 | `console` | Console Application |
 | `dll` | DLL Library (CGo, buildmode=c-shared) |
 | `webapi` | Web API (net/http, port 8080) |
 
-**Files tự động tạo:**
+**Files created automatically:**
 
 ```
 MyLib\
-    main.go              ← template DLL với các hàm mẫu
+    main.go              ← DLL template with sample exports
     go.mod
     .gitignore
     README.md
-    versioninfo.json     ← chỉ DLL
+    versioninfo.json     ← DLL only
     .gobuild\
-        GoBuildDLL.cfg   ← ProjectPath đã điền sẵn, dùng được ngay
+        GoBuildDLL.cfg   ← ProjectPath pre-filled, ready to use
 ```
 
-Sau khi tạo → Explorer mở + VS Code mở → `Ctrl+Shift+B` là build được ngay.
+After creation → Explorer opens + VS Code opens → `Ctrl+Shift+B` to build immediately.
 
 ---
 
-## 🏗️ Kỹ Thuật
+## 🏗️ Technical Notes
 
-- Viết bằng **Delphi 13.1** — file exe Win32 thuần, không cần runtime
-- Tất cả output dùng `WriteFile` trực tiếp — **không lỗi encoding**
-- VS Code tasks dùng `"type": "process"` — **không qua PowerShell**
-- `GoWatcher` dùng `isBackground: true` + `problemMatcher: []` — terminal không bị treo
-- Build song song qua `TThread` + `TCriticalSection` + `MemoryBarrier`
-- Go build dùng `Garble -tiny -seed=random` để obfuscate
-- Timestamp `[HH:MM:SS]` trên mọi dòng output để debug chính xác
+- Built with **Delphi 13.1** — native Win32 executables, no runtime required
+- All output via `WriteFile` directly — **no ACP encoding issues**
+- VS Code tasks use `"type": "process"` — **no PowerShell wrapper**
+- `GoWatcher` uses `isBackground: true` + `problemMatcher: []` — terminal never hangs
+- Parallel builds via `TThread` + `TCriticalSection` + `MemoryBarrier`
+- Go build uses `Garble -tiny -seed=random` for obfuscation
+- Timestamp `[HH:MM:SS]` on every output line for precise debugging
 
 ---
 
-## 📋 Yêu Cầu
+## 📋 Requirements
 
-| Thành phần | Ghi chú |
-|------------|---------|
+| Requirement | Notes |
+|-------------|-------|
 | Windows 10 / 11 | x64 |
 | VS Code | stable / Insiders / Cursor |
 | Go 1.21+ | [go.dev/dl](https://go.dev/dl/) |
-| GCC (MSYS2) | Chỉ cần khi build DLL |
-| staticcheck | Tùy chọn — tự phát hiện |
-| Garble | Tùy chọn — tự phát hiện, fallback về `go build` |
-| goversioninfo | Tùy chọn — nhúng version vào DLL |
+| GCC (MSYS2) | Required for DLL builds only |
+| staticcheck | Optional — auto-detected |
+| Garble | Optional — auto-detected, fallback to `go build` |
+| goversioninfo | Optional — for embedding version info in DLL |
 
 ---
 
-## 📂 Cấu Trúc Thư Mục
+## 📂 Folder Structure
 
 ```
 C:\GoToolsVSCode\
@@ -252,43 +252,43 @@ C:\GoToolsVSCode\
     GoModSync.exe
     GoNewProject.exe
     .gobuild\
-        GoBuildDLL.cfg   ← mẫu, copy vào project của bạn
-        GoBuildExe.cfg   ← mẫu, copy vào project của bạn
+        GoBuildDLL.cfg   ← sample, copy to your project
+        GoBuildExe.cfg   ← sample, copy to your project
     HUONG_DAN.md
-    GoConfig.marker      ← tạo sau lần setup đầu tiên
+    GoConfig.marker      ← created after first setup
 ```
 
 ---
 
-## 💡 Tại Sao Dùng GoToolsVSCode?
+## 💡 Why GoToolsVSCode?
 
 | | Shell Script / Makefile | Go Extension | GoToolsVSCode |
 |--|------------------------|--------------|---------------|
-| Encoding UTF-8 | ❌ Hay lỗi | ⚠️ Thỉnh thoảng | ✅ WriteFile thẳng |
-| PowerShell | ❌ Phụ thuộc | ✅ Không | ✅ Không |
-| Multi-project song song | ❌ Phức tạp | ❌ Không | ✅ TThread |
-| File watcher CPU | ❌ Polling | ✅ Thấp | ✅ Win32 event ~0% |
-| Cấu hình User-level | ❌ Từng project | ❌ Từng project | ✅ 1 lần cho tất cả |
-| Tự build khi lưu | ❌ Không | ❌ Không | ✅ Có |
-| Mở VS Code khi lỗi | ❌ Không | ✅ Có | ✅ Có |
-| Deploy máy mới | ❌ Cài lại | ✅ Extension | ✅ Copy folder + GoConfig |
+| UTF-8 encoding | ❌ Often broken | ⚠️ Occasional | ✅ WriteFile direct |
+| PowerShell | ❌ Required | ✅ No | ✅ No |
+| Multi-project parallel | ❌ Complex | ❌ No | ✅ TThread |
+| File watcher CPU | ❌ Polling | ✅ Low | ✅ Win32 event ~0% |
+| User-level config | ❌ Per project | ❌ Per project | ✅ Once for all |
+| Auto-build on save | ❌ No | ❌ No | ✅ Yes |
+| Open VS Code on error | ❌ No | ✅ Yes | ✅ Yes |
+| Deploy new machine | ❌ Reinstall all | ✅ Extension | ✅ Copy folder + GoConfig |
 
 ---
 
-## 📜 Giấy Phép
+## 📜 License
 
-Chỉ phân phối file thực thi — không chia sẻ mã nguồn.  
-Miễn phí cho cá nhân và thương mại.  
-MIT License — Copyright 2026 Kiều Mạnh
+Binaries only — source code is not distributed.  
+Free for personal and commercial use.  
+MIT License — Copyright 2026 Kieu Manh
 
 ---
 
-## 👤 Tác Giả
+## 👤 Author
 
-**Kiều Mạnh**  
+**Kieu Manh**  
 📧 kieumanh366377@gmail.com  
 🔗 [github.com/KieuManh366377](https://github.com/KieuManh366377)
 
 ---
 
-*GoToolsVSCode — Công cụ Go thuần Windows cho VS Code*
+*GoToolsVSCode — Native Go tooling for VS Code on Windows*
