@@ -14,9 +14,7 @@ Unlike shell scripts or Makefiles, these are native Win32 executables — no Pow
 Run `GoConfig.exe` once → `Ctrl+Shift+B` shows a full task picker in every Go project you open.
 
 ---
-# VS Code
-![Screenshot](https://raw.githubusercontent.com/KieuManh366377/GoToolsVSCode/main/GoToolsVSCode.png)
----
+
 ## 📦 Tools
 
 | Tool | Version | Description |
